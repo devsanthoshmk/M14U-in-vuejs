@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Song Queue</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
+</head>
+<body>
+  <div id="app" class="container mt-4">
+    <h2>Song Queue</h2>
+    <draggable v-model="songs" class="list-group">
+      <transition-group>
+        <li v-for="(song, index) in songs" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
+          <svg width="24px" height="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 8C10.3284 8 11 7.32843 11 6.5C11 5.67157 10.3284 5 9.5 5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8ZM9.5 14C10.3284 14 11 13.3284 11 12.5C11 11.6716 10.3284 11 9.5 11C8.67157 11 8 11.6716 8 12.5C8 13.3284 8.67157 14 9.5 14ZM11 18.5C11 19.3284 10.3284 20 9.5 20C8.67157 20 8 19.3284 8 18.5C8 17.6716 8.67157 17 9.5 17C10.3284 17 11 17.6716 11 18.5ZM15.5 8C16.3284 8 17 7.32843 17 6.5C17 5.67157 16.3284 5 15.5 5C14.6716 5 14 5.67157 14 6.5C14 7.32843 14.6716 8 15.5 8ZM17 12.5C17 13.3284 16.3284 14 15.5 14C14.6716 14 14 13.3284 14 12.5C14 11.6716 14.6716 11 15.5 11C16.3284 11 17 11.6716 17 12.5ZM15.5 20C16.3284 20 17 19.3284 17 18.5C17 17.6716 16.3284 17 15.5 17C14.6716 17 14 17.6716 14 18.5C14 19.3284 14.6716 20 15.5 20Z" fill="#121923"></path>
+            </g>
+          </svg>
+          {{ song.name }}
+        </li>
+        
+      </transition-group>
+    </draggable>
+
+    <div class="input-group mt-3">
+      <input type="text" v-model="newSong" class="form-control" placeholder="Add a song">
+      <button @click="addSong" class="btn btn-primary">Add to Queue</button>
+    </div>
+  </div>
+
+  <script>
+    window.vueInstance = new Vue({
+      el: '#app',
+      components: {
+        draggable: window.vuedraggable
+      },
+      data: {
+        songs: [],  // Array to hold queued songs
+        newSong: '' // Input for new song name
+      },
+      methods: {
+        addSong() {
+          if (this.newSong.trim()) {
+            this.songs.push({ name: this.newSong.trim() });
+            this.newSong = ''; // Clear the input
+          }
+        },
+        removeSong(index) {
+          this.songs.splice(index, 1);
+        },
+        display(){
+            console.log(songs);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

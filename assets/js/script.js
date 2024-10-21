@@ -1,5 +1,10 @@
-new Vue({
-  el: "#app",
+ const { createApp } = Vue
+
+ createApp({
+  
+        components: {
+            draggable,
+        },
   data() {
     return {
       audio: null,
@@ -8,150 +13,60 @@ new Vue({
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
-      tracks: [
-        
-        {
-          name: "MODUS",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
-          url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
-          favorited: true
-        },
-        {
-          name: "Tick Tock",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
-          url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
-          favorited: false
-        },
-        {
-          name: "Daylight",
-          artist: "Joji, Diplo",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
-          url: "https://www.youtube.com/watch?v=v97FPN2US2o",
-          favorited: false
-        },
-        {
-          name: "Upgrade",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
-          url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
-          favorited: true
-        },
-        {
-          name: "Gimme Love",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
-          url: "https://www.youtube.com/watch?v=jPan651rVMs",
-          favorited: false
-        },
-        {
-          name: "Run",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Run.mp3",
-          url: "https://www.youtube.com/watch?v=K09_5IsgGe8",
-          favorited: true
-        },
-        {
-          name: "Sanctuary",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Sanctuary.mp3",
-          url: "https://www.youtube.com/watch?v=YWN81V7ojOE",
-          favorited: true
-        },
-        {
-          name: "High Hopes (feat. Omar Apollo)",
-          artist: "Joji, Omar Apollo",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/High Hopes.mp3",
-          url: "https://www.youtube.com/watch?v=xPS6Tuh880k",
-          favorited: true
-        },
-        {
-          name: "NITROUS",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/NITROUS.mp3",
-          url: "https://www.youtube.com/watch?v=dHq_AS62ioY",
-          favorited: true
-        },
-        {
-          name: "Pretty Boy (feat. Lil Yachty)",
-          artist: "Joji, Lil Yachty",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Pretty Boy.mp3",
-          url: "https://www.youtube.com/watch?v=Qn5IpWXWub0",
-          favorited: true
-        },
-        {
-          name: "Normal People (feat. rei brown)",
-          artist: "Joji, rei brown",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Pretty Boy.mp3",
-          url: "https://www.youtube.com/watch?v=Qn5IpWXWub0",
-          favorited: true
-        },
-        {
-          name: "Afterthought",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Afterthought.mp3",
-          url: "https://www.youtube.com/watch?v=QH9vvwPPBS8",
-          favorited: true
-        },
-        {
-          name: "Mr. Hollywood",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Mr. Hollywood.mp3",
-          url: "https://www.youtube.com/watch?v=08xzc6pZ0m8",
-          favorited: true
-        },
-        {
-          name: "777",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/777.mp3",
-          url: "https://www.youtube.com/watch?v=7Gvh6pIHa_g",
-          favorited: true
-        },
-        {
-          name: "Reanimator (feat. Yves Tumor)",
-          artist: "Joji, Yves Tumor",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Reanimator.mp3",
-          url: "https://www.youtube.com/watch?v=coZdfBrHwxQ",
-          favorited: true
-        },
-        {
-          name: "Like You Do",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Like You Do.mp3",
-          url: "https://www.youtube.com/watch?v=Bv-1BnoB75k",
-          favorited: true
-        },
-        {
-          name: "Your Man",
-          artist: "Joji",
-          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Your Man.mp3",
-          url: "https://www.youtube.com/watch?v=RrtkU7i0qD8",
-          favorited: true
-        }
-      ],
-      currentTrack: null,
+      tracks:  [],
+      currentTrack: 0,
       currentTrackIndex: 0,
       transitionName: null,
 
-      songSearch:null
+      //offcanvas songs/songQueue
+
+      songSearch : null,
+      loading : false,
+      showRes : false,
+      searchtooltip : false,
+        // onclick fetch instead for song name click
+      delTracks: [ {
+        name: "MODUS",
+        artist: "Joji",
+        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
+        url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
+        favorited: true
+      },
+      {
+        name: "Tick Tock",
+        artist: "Joji",
+        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
+        url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
+        favorited: false
+      },
+      {
+        name: "Daylight",
+        artist: "Joji, Diplo",
+        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
+        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
+        url: "https://www.youtube.com/watch?v=v97FPN2US2o",
+        favorited: false
+      },
+      {
+        name: "Upgrade",
+        artist: "Joji",
+        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
+        url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
+        favorited: true
+      },
+      {
+        name: "Gimme Love",
+        artist: "Joji",
+        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
+        url: "https://www.youtube.com/watch?v=jPan651rVMs",
+        favorited: false}],
+
+        //for draggable
+        drag:false,
     };
   },
   methods: {
@@ -247,32 +162,101 @@ new Vue({
       this.tracks[this.currentTrackIndex].favorited = !this.tracks[
         this.currentTrackIndex
       ].favorited;
-    }
-  },
-  created() {
-    let vm = this;
-    this.currentTrack = this.tracks[0];
-    this.audio = new Audio();
-    this.audio.src = this.currentTrack.source;
-    this.audio.ontimeupdate = function() {
-      vm.generateTime();
-    };
-    this.audio.onloadedmetadata = function() {
-      vm.generateTime();
-    };
-    this.audio.onended = function() {
-      vm.nextTrack();
-      this.isTimerPlaying = true;
-    };
+    },
+    
+    //offcanvas songs/songQueue
 
-    // this is optional (for preload covers)
-    for (let index = 0; index < this.tracks.length; index++) {
-      const element = this.tracks[index];
+    async search(){
+      var query=this.songSearch;
+      console.log(query);
+      //needs more time lastla pathukalam
+      // if (query.length < 5){
+
+      // }
+      this.loading=true;
+      await new Promise(resolve => setTimeout(resolve,2000))
+      this.loading=false;
+      this.showRes=true;
+
+    },
+
+    directAddTrack(track){
+      // in process --> //make this a onclick for li song name(<p>) click method before that add thhat song playable link to tracks and continuoue this
+      this.tracks=[track];
+      let vm = this;
+      this.currentTrack = this.tracks[0];
+      this.audio = new Audio();
+      this.audio.src = this.currentTrack.source;
+      this.audio.ontimeupdate = function() {
+        vm.generateTime();
+      };
+      this.audio.onloadedmetadata = function() {
+        vm.generateTime();
+      };
+      this.audio.onended = function() {
+        vm.nextTrack();
+        this.isTimerPlaying = true;
+      };
+
+      // add this in watchers property to preload queue covers
+        // this is optional (for preload covers)
+      // for (let index = 0; index < this.tracks.length; index++) {
+      //   const element = this.tracks[index];
+      //   let link = document.createElement('link');
+      //   link.rel = "prefetch";
+      //   link.href = element.cover;
+      //   link.as = "image"
+      //   document.head.appendChild(link)
+      // }
+    },
+    async queue(track){
+      this.tracks.push({});
+      const ind=this.tracks.length -1;
+      await new Promise(resolve => setTimeout(resolve,6000))
+      this.tracks[ind]=track;
       let link = document.createElement('link');
       link.rel = "prefetch";
-      link.href = element.cover;
+      link.href = track.cover;
       link.as = "image"
       document.head.appendChild(link)
     }
+  },
+  mounted() {
+    new Sortable(this.$refs.queue, {
+      handle: '.handle', // handle's class
+      animation: 150,
+      ghostClass: 'blue-background-class',
+      
+    });
+
   }
-});
+  
+  // created(){
+  //     let vm = this;
+  //     this.currentTrack = this.tracks[0];
+  //     this.audio = new Audio();
+  //     this.audio.src = this.currentTrack.source;
+  //     this.audio.ontimeupdate = function() {
+  //       vm.generateTime();
+  //     };
+  //     this.audio.onloadedmetadata = function() {
+  //       vm.generateTime();
+  //     };
+  //     this.audio.onended = function() {
+  //       vm.nextTrack();
+  //       this.isTimerPlaying = true;
+  //     };
+
+  //     // add this in watchers property to preload queue covers
+  //       // this is optional (for preload covers)
+  //     for (let index = 0; index < this.tracks.length; index++) {
+  //       const element = this.tracks[index];
+  //       let link = document.createElement('link');
+  //       link.rel = "prefetch";
+  //       link.href = element.cover;
+  //       link.as = "image"
+  //       document.head.appendChild(link)
+  // }
+
+  // }
+  }).mount("#app")

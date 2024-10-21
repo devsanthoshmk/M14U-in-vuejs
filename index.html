@@ -10,7 +10,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>M14U</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+ <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+<script src="//cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
+<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.0.0/vuedraggable.umd.min.js"></script>
+
+ <!-- Add this script in the head or before the closing body tag
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+ -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Bitter:400,700&amp;display=swap&amp;subset=latin-ext">
   <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -51,44 +59,37 @@
         class="offcanvas-body d-flex flex-column justify-content-between align-items-center align-items-xxl-center pt-0">
         <div class="container d-grid mt-2">
           <div class="search d-flex float-start float-md-end justify-content-xxl-center"><i
-              class="fas fa-search float-start search-icon"></i><input v-model="songSearch" id="search"
+              class="fas fa-search float-start search-icon"></i><input v-model="songSearch" @keyup.enter="search" 
               class="border-dark float-start float-sm-end custom-search-input" type="search"
               placeholder="Search songs here" style="margin-bottom: 0px;"></div>
-          <div class="d-none">
+          <div v-show="showRes">
             <div class="d-inline-flex justify-content-xxl-center list-groups" id="sugest-1"
               style="padding-left: 0px;width: 347px;margin-left: 0px;">
               <ul
                 class="list-group border rounded border-1 border-white d-flex d-xxl-flex justify-content-xxl-start align-items-xxl-center"
                 style="padding-right: 0px;width: 205.906px;border-radius: -28px;">
-                <li
-                  class="list-group-item text-center d-flex d-xxl-flex flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-baseline align-content-center justify-content-xl-start border-light-subtle"
+                <!-- add onlick and make that created() poperty as a method -->
+                <li v-for="temp in delTracks"
+                  class="list-group-item d-flex justify-content-between align-items-center"
                   style="height: 38px;width: 295.906px;">
-                  <p class="d-flex d-xxl-flex justify-content-xxl-center">songs</p>
+                  <p @click="directAddTrack(temp)" class="d-flex d-xxl-flex justify-content-xxl-center">{{temp.name}}</p>
+                  <button @click="queue(temp)" data-bs-placement="top" title="Add To Queue" class="btn active border-0 border-white"  >
+                                                                      
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" style="width: 1.5em;
+                  height: 1.5em;">
+                      <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"></path>
+                      <path fill-rule="evenodd" d="M12 3v10h-1V3z"></path>
+                      <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"></path>
+                      <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"></path>
+                  </svg>
+                  </button>
                 </li>
-                <li
-                  class="list-group-item text-center d-flex d-xxl-flex flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-baseline align-content-center justify-content-xl-start border-light-subtle"
-                  style="height: 38px;width: 295.906px;">
-                  <p class="d-flex d-xxl-flex justify-content-xxl-center">songs</p>
-                </li>
-                <li
-                  class="list-group-item text-center d-flex d-xxl-flex flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-baseline align-content-center justify-content-xl-start border-light-subtle"
-                  style="height: 38px;width: 295.906px;">
-                  <p class="d-flex d-xxl-flex justify-content-xxl-center">songs</p>
-                </li>
-                <li
-                  class="list-group-item text-center d-flex d-xxl-flex flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-baseline align-content-center justify-content-xl-start border-light-subtle"
-                  style="height: 38px;width: 295.906px;">
-                  <p class="d-flex d-xxl-flex justify-content-xxl-center">songs</p>
-                </li>
-                <li
-                  class="list-group-item text-center d-flex d-xxl-flex flex-row flex-grow-1 flex-shrink-0 flex-fill justify-content-center align-items-baseline align-content-center justify-content-xl-start border-light-subtle"
-                  style="height: 38px;width: 295.906px;">
-                  <p class="d-flex d-xxl-flex justify-content-xxl-center">songs</p>
+                
                 </li>
               </ul>
             </div>
           </div>
-          <div class="d-none" id="loading">
+          <div v-show="loading">
             <div class="d-inline-flex justify-content-xxl-center list-groups" id="sugest"
               style="padding-left: 0px;width: 347px;margin-left: 0px;">
               <ul
@@ -106,20 +107,23 @@
           <div id="empty" style="height: 68px;"></div>
           <div>
             <h1 class="fs-3">Queue</h1>
-            <div>
-              <div id="no-songs" style="margin-top: 103px;">
-                <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
-              </div>
+            <div v-show="tracks.length === 0" style="margin-top: 103px;">
+              <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
             </div>
-            <div class="d-none">
-              <div id="queue">
-                <ul class="list-group">
-                  <li class="list-group-item d-inline-flex"><span style="height: 34px;"><input class="form-control-sm"
-                        type="number" style="width: 48px;height: 9px;"><sup>th</sup>&nbsp;Song:<br><br></span><span
-                      style="margin-top: -2px;padding: 4px;padding-top: 6px;padding-left: 3px;">Blah blah...</span></li>
-                </ul>
-              </div>
-            </div>
+            <draggable v-model="tracks" 
+                      group="people" 
+                      @start="drag=true" 
+                      @end="drag=false" 
+                      item-key="id" v-show="tracks.length !== 0" ref="queue" class="list-group mt-3">
+              <template v-for="(track, index) in tracks" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
+                <svg class="handle" width="24px" height="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 8C10.3284 8 11 7.32843 11 6.5C11 5.67157 10.3284 5 9.5 5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8ZM9.5 14C10.3284 14 11 13.3284 11 12.5C11 11.6716 10.3284 11 9.5 11C8.67157 11 8 11.6716 8 12.5C8 13.3284 8.67157 14 9.5 14ZM11 18.5C11 19.3284 10.3284 20 9.5 20C8.67157 20 8 19.3284 8 18.5C8 17.6716 8.67157 17 9.5 17C10.3284 17 11 17.6716 11 18.5ZM15.5 8C16.3284 8 17 7.32843 17 6.5C17 5.67157 16.3284 5 15.5 5C14.6716 5 14 5.67157 14 6.5C14 7.32843 14.6716 8 15.5 8ZM17 12.5C17 13.3284 16.3284 14 15.5 14C14.6716 14 14 13.3284 14 12.5C14 11.6716 14.6716 11 15.5 11C16.3284 11 17 11.6716 17 12.5ZM15.5 20C16.3284 20 17 19.3284 17 18.5C17 17.6716 16.3284 17 15.5 17C14.6716 17 14 17.6716 14 18.5C14 19.3284 14.6716 20 15.5 20Z" fill="#121923"></path>
+                </svg>
+                {{ track.name }}
+              </template>
+            </draggable>
+            
+            
           </div>
         </div>
       </div>
@@ -129,14 +133,17 @@
       <div class="player">
         <div class="player__top">
           <div class="player-cover">
-            <transition-group :name="transitionName">
-              <div class="player-cover__item" v-if="$index === currentTrackIndex"
-                :style="{ backgroundImage: `url(${track.cover})` }" v-for="(track, $index) in tracks" :key="$index">
-              </div>
+            <transition-group name="transitionName">
+              <div class="player-cover__item"
+                  v-for="(track, index) in tracks"
+                  :key="index"
+                  v-show="index === currentTrackIndex"
+                  :style="{ backgroundImage: `url(${track.cover})` }"
+                ></div>
             </transition-group>
           </div>
           <div class="player-controls">
-            <div class="player-controls__item -favorite" :class="{ active : currentTrack.favorited }" @click="favorite">
+            <div class="player-controls__item -favorite" :class="{ active: currentTrack.favorited }" @click="favorite">
               <svg class="icon">
                 <use xlink:href="#icon-heart-o"></use>
               </svg>
@@ -164,8 +171,8 @@
             </div>
           </div>
         </div>
-        <div class="coustum-progress" ref="progress">
-          <div class="progress__top">
+        <div class="progress" ref="progress">
+          <div class="progress__top" id="tooltiping1" data-bs-placement="bottom" title="Old Title">
             <div class="album-info" v-if="currentTrack">
               <div class="album-info__name">{{ currentTrack.artist }}</div>
               <div class="album-info__track">{{ currentTrack.name }}</div>
@@ -173,14 +180,14 @@
             <div class="progress__duration">{{ duration }}</div>
           </div>
           <div class="progress__bar" @click="clickProgress">
-            <div class="progress__current" :style="{ width : barWidth }"></div>
+            <div class="progress__current" :style="{ width: barWidth }"></div>
           </div>
           <div class="progress__time">{{ currentTime }}</div>
         </div>
         <div v-cloak></div>
       </div>
-
     </div>
+    
 
     <svg xmlns="http://www.w3.org/2000/svg" hidden xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
@@ -278,8 +285,7 @@
     </svg>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script type="module" src="assets/js/script.js"></script>
 
   <script>
 
