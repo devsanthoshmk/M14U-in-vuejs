@@ -1,10 +1,9 @@
  const { createApp } = Vue
-
  createApp({
   
         components: {
-            draggable,
-        },
+          draggable: window.vuedraggable,
+         },
   data() {
     return {
       audio: null,
@@ -67,6 +66,9 @@
 
         //for draggable
         drag:false,
+        myArray: [{ id: 1, name: 'Person 1' },
+          { id: 2, name: 'Person 2' },
+          { id: 3, name: 'Person 3' }],
     };
   },
   methods: {
@@ -221,6 +223,10 @@
       document.head.appendChild(link)
     }
   },
+  watch: {
+    myArray(newValue) {
+      console.log(newValue);  // Logs the updated value of `myArray`
+    }},
   mounted() {
     new Sortable(this.$refs.queue, {
       handle: '.handle', // handle's class
