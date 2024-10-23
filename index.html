@@ -16,9 +16,6 @@
   <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
   <script src="https://cdn.jsdelivr.net/npm/vuedraggable@4.0.0/dist/vuedraggable.umd.min.js"></script>
 
-  <!-- Add this script in the head or before the closing body tag
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
- -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Bitter:400,700&amp;display=swap&amp;subset=latin-ext">
   <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -112,18 +109,19 @@
           </div>
           <div id="empty" style="height: 68px;"></div>
           <div>
-            <h1 class="fs-3">Queue</h1>
-            <div v-show="tracks.length === 0" style="margin-top: 103px;">
-              <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
+            <div v-show="tracks.length===0">
+              <h1 class="fs-3">Queue</h1>
+                <div v-show="tracks.length === 0" style="margin-top: 103px;">
+                  <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
+                </div>
             </div>
-            <draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false" item-key="id">
-              <template #item="{ element }">
-                <div :key="element.id">{{ element.name }}</div>
-              </template>
-            </draggable>
-            
-
-
+            <div v-show="tracks.length!==0">
+              <draggable v-model="tracks" group="people" @start="drag=true" @end="drag=false" item-key="id">
+                <template #item="{ element }">
+                  <div :key="element.id">{{ element.name }}</div>
+                </template>
+              </draggable>
+            </div>
           </div>
         </div>
       </div>
@@ -133,7 +131,7 @@
       <div class="player">
         <div class="player__top">
           <div class="player-cover">
-            <transition-group name="transitionName">
+            <transition-group :name="transitionName">
               <div class="player-cover__item" v-for="(track, index) in tracks" :key="index"
                 v-show="index === currentTrackIndex" :style="{ backgroundImage: `url(${track.cover})` }"></div>
             </transition-group>

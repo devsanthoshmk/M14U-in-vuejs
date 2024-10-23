@@ -66,9 +66,7 @@
 
         //for draggable
         drag:false,
-        myArray: [{ id: 1, name: 'Person 1' },
-          { id: 2, name: 'Person 2' },
-          { id: 3, name: 'Person 3' }],
+        
     };
   },
   methods: {
@@ -135,6 +133,9 @@
       }
       this.currentTrack = this.tracks[this.currentTrackIndex];
       this.resetPlayer();
+      setTimeout(() => {
+        this.isShowCover = true;
+      }, 100);
     },
     nextTrack() {
       this.transitionName = "scale-out";
@@ -212,30 +213,27 @@
       // }
     },
     async queue(track){
-      this.tracks.push({});
-      const ind=this.tracks.length -1;
-      await new Promise(resolve => setTimeout(resolve,6000))
-      this.tracks[ind]=track;
-      let link = document.createElement('link');
-      link.rel = "prefetch";
-      link.href = track.cover;
-      link.as = "image"
-      document.head.appendChild(link)
+      if (this.tracks.length===0){
+        this.directAddTrack(track)
+      }
+      else{
+        this.tracks.push({});
+        const ind=this.tracks.length -1;
+        await new Promise(resolve => setTimeout(resolve,6000))
+        this.tracks[ind]=track;
+        let link = document.createElement('link');
+        link.rel = "prefetch";
+        link.href = track.cover;
+        link.as = "image"
+        document.head.appendChild(link)
+      }
     }
   },
   watch: {
-    myArray(newValue) {
+    tracks(newValue) {
       console.log(newValue);  // Logs the updated value of `myArray`
     }},
-  mounted() {
-    new Sortable(this.$refs.queue, {
-      handle: '.handle', // handle's class
-      animation: 150,
-      ghostClass: 'blue-background-class',
-      
-    });
-
-  }
+  
   
   // created(){
   //     let vm = this;
