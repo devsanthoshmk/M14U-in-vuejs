@@ -230,9 +230,23 @@
     }
   },
   watch: {
+      // for dev
     tracks(newValue) {
       console.log(newValue);  // Logs the updated value of `myArray`
     }},
+    // tracks[0](newValue,preValue){}
+  computed: {
+    dragOptions() {
+
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+        
+      };
+    }
+  }
   
   
   // created(){

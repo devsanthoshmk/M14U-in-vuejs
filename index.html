@@ -109,16 +109,25 @@
           </div>
           <div id="empty" style="height: 68px;"></div>
           <div>
-            <div v-show="tracks.length===0">
-              <h1 class="fs-3">Queue</h1>
-                <div v-show="tracks.length === 0" style="margin-top: 103px;">
-                  <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
-                </div>
+            <div>
+              <h1 class="fs-3 mb-2">Queue</h1>
+              <div v-show="tracks.length === 0" style="margin-top: 90px;">
+                <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
+              </div>
             </div>
-            <div v-show="tracks.length!==0">
-              <draggable v-model="tracks" group="people" @start="drag=true" @end="drag=false" item-key="id">
+            <div>
+              <draggable class="list-group" tag="transition-group" :component-data="{
+          tag: 'ul',
+          type: 'transition-group',
+          name: !drag ? 'flip-list' : null
+        }" v-model="tracks" v-bind="dragOptions" @start="drag = true" @end="drag = false" item-key="order">
                 <template #item="{ element }">
-                  <div :key="element.id">{{ element.name }}</div>
+                  <li class="list-group-item">
+                    <i :class="
+                element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'
+              " @click="element.fixed = !element.fixed" aria-hidden="true"></i>
+                    {{ element.name }}
+                  </li>
                 </template>
               </draggable>
             </div>
@@ -132,6 +141,7 @@
         <div class="player__top">
           <div class="player-cover">
             <transition-group :name="transitionName">
+              <!-- add id feild to tracks and change index to id here!!1111111111111111 -->
               <div class="player-cover__item" v-for="(track, index) in tracks" :key="index"
                 v-show="index === currentTrackIndex" :style="{ backgroundImage: `url(${track.cover})` }"></div>
             </transition-group>
