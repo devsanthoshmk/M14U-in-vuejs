@@ -10,15 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>M14U</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
- <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="//cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
-<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.0.0/vuedraggable.umd.min.js"></script>
+  <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+  <script src="//cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
+  <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+  <script src="https://cdn.jsdelivr.net/npm/vuedraggable@4.0.0/dist/vuedraggable.umd.min.js"></script>
 
- <!-- Add this script in the head or before the closing body tag
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
- -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Bitter:400,700&amp;display=swap&amp;subset=latin-ext">
   <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -32,12 +30,14 @@
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
   <div class="d-flex align-items-center" id="app">
-    <button class="btn active border-0 border-white position-fixed top-0 start-0 m-2 p-2" type="button" data-bs-target="#offcanvas-menu"
-      data-bs-toggle="offcanvas"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-        viewBox="0 0 16 16" class="bi bi-music-note-list"
+    <button class="btn active border-0 border-white position-fixed top-0 start-0 m-2 p-2" type="button"
+      data-bs-target="#offcanvas-menu" data-bs-toggle="offcanvas"><svg xmlns="http://www.w3.org/2000/svg" width="1em"
+        height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-music-note-list"
         style="font-size: 45px;padding-top: 0px;margin-top: 6px;margin-left: 12px;">
         <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"></path>
         <path fill-rule="evenodd" d="M12 3v10h-1V3z"></path>
@@ -46,10 +46,11 @@
           d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5">
         </path>
       </svg></button>
-    <div class="offcanvas offcanvas-start bg-body shadow-lg border-end show" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
-      id="offcanvas-menu">
-      <div class="offcanvas-header text-center border border-2 rounded"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-          fill="currentColor" viewBox="0 0 16 16" class="bi bi-list-nested me-3" style="font-size: 25px;">
+    <div class="offcanvas offcanvas-start bg-body shadow-lg border-end show" tabindex="-1" data-bs-backdrop="false"
+      data-bs-keyboard="false" id="offcanvas-menu" style="background-color: #e6f1fd !important;">
+      <div class="offcanvas-header text-center border border-2 rounded"><svg xmlns="http://www.w3.org/2000/svg"
+          width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-list-nested me-3"
+          style="font-size: 25px;">
           <path fill-rule="evenodd"
             d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5">
           </path>
@@ -59,7 +60,7 @@
         class="offcanvas-body d-flex flex-column justify-content-between align-items-center align-items-xxl-center pt-0">
         <div class="container d-grid mt-2">
           <div class="search d-flex float-start float-md-end justify-content-xxl-center"><i
-              class="fas fa-search float-start search-icon"></i><input v-model="songSearch" @keyup.enter="search" 
+              class="fas fa-search float-start search-icon"></i><input v-model="songSearch" @keyup.enter="search"
               class="border-dark float-start float-sm-end custom-search-input" type="search"
               placeholder="Search songs here" style="margin-bottom: 0px;"></div>
           <div v-show="showRes">
@@ -69,22 +70,27 @@
                 class="list-group border rounded border-1 border-white d-flex d-xxl-flex justify-content-xxl-start align-items-xxl-center"
                 style="padding-right: 0px;width: 205.906px;border-radius: -28px;">
                 <!-- add onlick and make that created() poperty as a method -->
-                <li v-for="temp in delTracks"
-                  class="list-group-item d-flex justify-content-between align-items-center"
-                  style="height: 38px;width: 295.906px;">
-                  <p @click="directAddTrack(temp)" class="d-flex d-xxl-flex justify-content-xxl-center">{{temp.name}}</p>
-                  <button @click="queue(temp)" data-bs-placement="top" title="Add To Queue" class="btn active border-0 border-white"  >
-                                                                      
+                <li v-for="temp in song_list" class="list-group-item d-flex justify-content-between align-items-center"
+                style="height: 42px; width: 295.906px; "><div  @click="()=>{temp={...temp,favorited:false}; directAddTrack(temp)}" style="overflow-x: auto; white-space: nowrap; height: inherit;" class="d-flex justify-content-start align-items-center">
+                  <p class="text-center">{{temp.name}} <b class="fw-bold">by</b> {{temp.artist}}
+                    </p>
+                </div>
+                
+                  <button @click="()=>{temp={...temp,favorited:false}; queue(temp)}" data-bs-placement="top" title="Add To Queue"
+                    class="btn active border-0 border-white">
+
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" style="width: 1.5em;
                   height: 1.5em;">
                       <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"></path>
                       <path fill-rule="evenodd" d="M12 3v10h-1V3z"></path>
                       <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"></path>
-                      <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"></path>
-                  </svg>
+                      <path fill-rule="evenodd"
+                        d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5">
+                      </path>
+                    </svg>
                   </button>
                 </li>
-                
+
                 </li>
               </ul>
             </div>
@@ -104,26 +110,42 @@
               </ul>
             </div>
           </div>
-          <div id="empty" style="height: 68px;"></div>
+          <div id="empty" style="height: 48px;"></div>
           <div>
-            <h1 class="fs-3">Queue</h1>
-            <div v-show="tracks.length === 0" style="margin-top: 103px;">
-              <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+              <h1 class="fs-3 mb-2">Queue</h1>  <i v-show="tracks.length !== 0" class="fa fa-times close ps-2" @click="tracks.splice(1,tracks.length-1)" title="clear queue"></i>            </div>
+              <div v-show="tracks.length === 0" style="margin-top: 90px;">
+                <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
+              </div>
             </div>
-            <draggable v-model="tracks" 
-                      group="people" 
-                      @start="drag=true" 
-                      @end="drag=false" 
-                      item-key="id" v-show="tracks.length !== 0" ref="queue" class="list-group mt-3">
-              <template v-for="(track, index) in tracks" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
-                <svg class="handle" width="24px" height="24px" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 8C10.3284 8 11 7.32843 11 6.5C11 5.67157 10.3284 5 9.5 5C8.67157 5 8 5.67157 8 6.5C8 7.32843 8.67157 8 9.5 8ZM9.5 14C10.3284 14 11 13.3284 11 12.5C11 11.6716 10.3284 11 9.5 11C8.67157 11 8 11.6716 8 12.5C8 13.3284 8.67157 14 9.5 14ZM11 18.5C11 19.3284 10.3284 20 9.5 20C8.67157 20 8 19.3284 8 18.5C8 17.6716 8.67157 17 9.5 17C10.3284 17 11 17.6716 11 18.5ZM15.5 8C16.3284 8 17 7.32843 17 6.5C17 5.67157 16.3284 5 15.5 5C14.6716 5 14 5.67157 14 6.5C14 7.32843 14.6716 8 15.5 8ZM17 12.5C17 13.3284 16.3284 14 15.5 14C14.6716 14 14 13.3284 14 12.5C14 11.6716 14.6716 11 15.5 11C16.3284 11 17 11.6716 17 12.5ZM15.5 20C16.3284 20 17 19.3284 17 18.5C17 17.6716 16.3284 17 15.5 17C14.6716 17 14 17.6716 14 18.5C14 19.3284 14.6716 20 15.5 20Z" fill="#121923"></path>
-                </svg>
-                {{ track.name }}
+            <div>
+              <draggable
+              tag="ul"
+              :list="tracks"
+              class="list-group vertiscrol w-100 w-md-75 w-lg-50 mx-auto" 
+              handle=".handle"
+              item-key="id"
+              style="padding-right: 0px; width: 205.906px;"
+            >
+              <template #item="{ element, index }">
+                <li 
+                  class="list-group-item d-flex justify-content-center align-items-center" 
+                  style="height: 42px; width: 295.906px; display: inherit;"
+                >
+                  <i class="fa fa-align-justify handle"></i>
+                  <div class="flex-grow-1 d-flex justify-content-between align-items-center" style="width: 10vh;height: inherit;">
+                    <div class="d-flex justify-content-start align-items-center" style="overflow-x: auto; white-space: nowrap; flex-grow: 1; max-width: 100%;">
+                      <span class="text">{{ element.name }}</span>
+                    </div>
+                    <i class="fa fa-times close ps-2" @click="removeAt(index)"></i>
+                  </div>
+                </li>
               </template>
             </draggable>
             
             
+            </div>
           </div>
         </div>
       </div>
@@ -133,13 +155,10 @@
       <div class="player">
         <div class="player__top">
           <div class="player-cover">
-            <transition-group name="transitionName">
-              <div class="player-cover__item"
-                  v-for="(track, index) in tracks"
-                  :key="index"
-                  v-show="index === currentTrackIndex"
-                  :style="{ backgroundImage: `url(${track.cover})` }"
-                ></div>
+            <transition-group :name="transitionName">
+              <!-- add id feild to tracks and change index to id here!!1111111111111111 -->
+              <div class="player-cover__item" v-for="track in tracks" :key="track.id"
+                v-show="track.id ===  currentTrack.id" :style="{ backgroundImage: `url(${track.cover})` }"></div>
             </transition-group>
           </div>
           <div class="player-controls">
@@ -172,10 +191,10 @@
           </div>
         </div>
         <div class="progress" ref="progress">
-          <div class="progress__top" id="tooltiping1" data-bs-placement="bottom" title="Old Title">
+          <div class="progress__top">
             <div class="album-info" v-if="currentTrack">
-              <div class="album-info__name">{{ currentTrack.artist }}</div>
-              <div class="album-info__track">{{ currentTrack.name }}</div>
+              <div class="album-info__name">{{ currentTrack.name }}</div>
+              <div class="album-info__track">{{ currentTrack.artist }}</div>
             </div>
             <div class="progress__duration">{{ duration }}</div>
           </div>
@@ -187,7 +206,7 @@
         <div v-cloak></div>
       </div>
     </div>
-    
+
 
     <svg xmlns="http://www.w3.org/2000/svg" hidden xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>

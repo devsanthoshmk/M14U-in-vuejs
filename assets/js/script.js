@@ -1,10 +1,9 @@
  const { createApp } = Vue
-
  createApp({
   
         components: {
-            draggable,
-        },
+          draggable: window.vuedraggable,
+         },
   data() {
     return {
       audio: null,
@@ -18,55 +17,66 @@
       currentTrackIndex: 0,
       transitionName: null,
 
+      //used to create dynamic unique id for tracks
+      gid:0,
       //offcanvas songs/songQueue
 
       songSearch : null,
       loading : false,
       showRes : false,
       searchtooltip : false,
+
+      // for song_names
+      song_list:[],
+
         // onclick fetch instead for song name click
-      delTracks: [ {
-        name: "MODUS",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
-        url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
-        favorited: true
-      },
-      {
-        name: "Tick Tock",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
-        url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
-        favorited: false
-      },
-      {
-        name: "Daylight",
-        artist: "Joji, Diplo",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
-        url: "https://www.youtube.com/watch?v=v97FPN2US2o",
-        favorited: false
-      },
-      {
-        name: "Upgrade",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
-        url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
-        favorited: true
-      },
-      {
-        name: "Gimme Love",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
-        url: "https://www.youtube.com/watch?v=jPan651rVMs",
-        favorited: false}],
+      delTracks:[
+        {
+          name: "MODUS",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
+          url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
+          favorited: true
+        },
+        {
+          name: "Tick Tock",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
+          url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
+          favorited: false
+        },
+        {
+          name: "Daylight",
+          artist: "Joji, Diplo",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
+          url: "https://www.youtube.com/watch?v=v97FPN2US2o",
+          favorited: false
+        },
+        {
+          name: "Upgrade",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
+          url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
+          favorited: true
+        },
+        {
+          name: "Gimme Love",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
+          url: "https://www.youtube.com/watch?v=jPan651rVMs",
+          favorited: false
+        }
+      ]
+      ,
 
         //for draggable
         drag:false,
+        
     };
   },
   methods: {
@@ -133,6 +143,9 @@
       }
       this.currentTrack = this.tracks[this.currentTrackIndex];
       this.resetPlayer();
+      setTimeout(() => {
+        this.isShowCover = true;
+      }, 100);
     },
     nextTrack() {
       this.transitionName = "scale-out";
@@ -174,17 +187,47 @@
 
       // }
       this.loading=true;
-      await new Promise(resolve => setTimeout(resolve,2000))
+      const response = await fetch(`/song_results?input=${encodeURIComponent(query)}`); 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+      const data = await response.json();
+      console.log(data);
+      this.song_list=Object.values(data);
+      console.log(this.song_list);
       this.loading=false;
       this.showRes=true;
 
     },
+    async makePlayable(link){
+      const response = await fetch(`/playable_link?song_url=${encodeURIComponent(link)}`); 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+      const data = await response.json();
+      console.log(data);
+      console.log(data);
+      return data
+    },
 
-    directAddTrack(track){
-      // in process --> //make this a onclick for li song name(<p>) click method before that add thhat song playable link to tracks and continuoue this
-      this.tracks=[track];
+    async directAddTrack(track){
+
+      // in process --> //make this a onclick for li song name(<p>) click method before that add that song playable link to tracks and continuoue this
+
+      const trg1=++this.gid;
+      track={...track,id:trg1}
+      if (trg1===1) this.tracks=[{id:track.id,name:"Loading..."}];
+      else this.tracks.splice(0,0,{id:track.id,name:"Loading..."})
+      const ind=this.tracks.length -1;
+      // await new Promise(resolve => setTimeout(resolve,6000))
+      let plink=await this.makePlayable(track.url);
+      track={...track,source:plink};
+      const index = this.tracks.findIndex(obj => obj.id === trg1);
+      if (index !== -1) this.tracks[index] = track;
       let vm = this;
-      this.currentTrack = this.tracks[0];
+      this.currentTrack = track;
       this.audio = new Audio();
       this.audio.src = this.currentTrack.source;
       this.audio.ontimeupdate = function() {
@@ -197,6 +240,9 @@
         vm.nextTrack();
         this.isTimerPlaying = true;
       };
+      // testing must del
+      // this.audio.currentTime = 40;
+      // this.generateTime();
 
       // add this in watchers property to preload queue covers
         // this is optional (for preload covers)
@@ -210,26 +256,51 @@
       // }
     },
     async queue(track){
-      this.tracks.push({});
-      const ind=this.tracks.length -1;
-      await new Promise(resolve => setTimeout(resolve,6000))
-      this.tracks[ind]=track;
-      let link = document.createElement('link');
-      link.rel = "prefetch";
-      link.href = track.cover;
-      link.as = "image"
-      document.head.appendChild(link)
+      if (this.tracks.length===0){
+        this.directAddTrack(track)
+      }
+      else{
+        const trg2=++this.gid;
+        track={...track,id:trg2}
+        this.tracks.push({id:track.id,name:"Loading..."});
+        let plink=await this.makePlayable(track.url);
+        track={...track,source:plink};
+        const index = this.tracks.findIndex(obj => obj.id === trg2);
+        if (index !== -1) this.tracks[index] = track;
+        // let link = document.createElement('link');
+        // link.rel = "prefetch";
+        // link.href = track.cover;
+        // link.as = "image"
+        // document.head.appendChild(link)
+      }
+    },
+    removeAt(index) {
+      this.tracks.splice(index, 1);
     }
   },
-  mounted() {
-    new Sortable(this.$refs.queue, {
-      handle: '.handle', // handle's class
-      animation: 150,
-      ghostClass: 'blue-background-class',
-      
-    });
+  watch: {
+      // for dev
+    // gid(newValue){
+    //   console.log(newValue);  // Logs the updated value of `myArray`
+    // },
+    tracks(newValue) {
+      console.log(newValue);  // Logs the updated value of `myArray`
+      console.log(this.currentTrackIndex,this.tracks[this.currentTrackIndex].id)
+    }},
+    // tracks[0](newValue,preValue){}
+  computed: {
+    dragOptions() {
 
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+        
+      };
+    }
   }
+  
   
   // created(){
   //     let vm = this;
