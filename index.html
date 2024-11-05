@@ -70,13 +70,13 @@
                 class="list-group border rounded border-1 border-white d-flex d-xxl-flex justify-content-xxl-start align-items-xxl-center"
                 style="padding-right: 0px;width: 205.906px;border-radius: -28px;">
                 <!-- add onlick and make that created() poperty as a method -->
-                <li v-for="temp in delTracks" class="list-group-item d-flex justify-content-between align-items-center"
-                style="height: 42px; width: 295.906px; "><div  @click="directAddTrack(temp)" style="overflow-x: auto; white-space: nowrap; height: inherit;" class="d-flex justify-content-center align-items-center">
-                  <p class="text-center">{{temp.name}}
+                <li v-for="temp in song_list" class="list-group-item d-flex justify-content-between align-items-center"
+                style="height: 42px; width: 295.906px; "><div  @click="()=>{temp={...temp,favorited:false}; directAddTrack(temp)}" style="overflow-x: auto; white-space: nowrap; height: inherit;" class="d-flex justify-content-start align-items-center">
+                  <p class="text-center">{{temp.name}} <b class="fw-bold">by</b> {{temp.artist}}
                     </p>
                 </div>
                 
-                  <button @click="queue(temp)" data-bs-placement="top" title="Add To Queue"
+                  <button @click="()=>{temp={...temp,favorited:false}; queue(temp)}" data-bs-placement="top" title="Add To Queue"
                     class="btn active border-0 border-white">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" style="width: 1.5em;
@@ -191,10 +191,10 @@
           </div>
         </div>
         <div class="progress" ref="progress">
-          <div class="progress__top" id="tooltiping1" data-bs-placement="bottom" title="Old Title">
+          <div class="progress__top">
             <div class="album-info" v-if="currentTrack">
-              <div class="album-info__name">{{ currentTrack.artist }}</div>
-              <div class="album-info__track">{{ currentTrack.name }}</div>
+              <div class="album-info__name">{{ currentTrack.name }}</div>
+              <div class="album-info__track">{{ currentTrack.artist }}</div>
             </div>
             <div class="progress__duration">{{ duration }}</div>
           </div>

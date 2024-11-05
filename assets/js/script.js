@@ -25,6 +25,10 @@
       loading : false,
       showRes : false,
       searchtooltip : false,
+
+      // for song_names
+      song_list:[],
+
         // onclick fetch instead for song name click
       delTracks:[
         {
@@ -183,10 +187,29 @@
 
       // }
       this.loading=true;
-      await new Promise(resolve => setTimeout(resolve,2000))
+      const response = await fetch(`/song_results?input=${encodeURIComponent(query)}`); 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+      const data = await response.json();
+      console.log(data);
+      this.song_list=Object.values(data);
+      console.log(this.song_list);
       this.loading=false;
       this.showRes=true;
 
+    },
+    async makePlayable(link){
+      const response = await fetch(`/playable_link?song_url=${encodeURIComponent(link)}`); 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+      const data = await response.json();
+      console.log(data);
+      console.log(data);
+      return data
     },
 
     async directAddTrack(track){
@@ -198,7 +221,9 @@
       if (trg1===1) this.tracks=[{id:track.id,name:"Loading..."}];
       else this.tracks.splice(0,0,{id:track.id,name:"Loading..."})
       const ind=this.tracks.length -1;
-      await new Promise(resolve => setTimeout(resolve,6000))
+      // await new Promise(resolve => setTimeout(resolve,6000))
+      let plink=await this.makePlayable(track.url);
+      track={...track,source:plink};
       const index = this.tracks.findIndex(obj => obj.id === trg1);
       if (index !== -1) this.tracks[index] = track;
       let vm = this;
@@ -215,6 +240,9 @@
         vm.nextTrack();
         this.isTimerPlaying = true;
       };
+      // testing must del
+      // this.audio.currentTime = 40;
+      // this.generateTime();
 
       // add this in watchers property to preload queue covers
         // this is optional (for preload covers)
@@ -235,8 +263,8 @@
         const trg2=++this.gid;
         track={...track,id:trg2}
         this.tracks.push({id:track.id,name:"Loading..."});
-        // const ind=this.tracks.length -1;
-        await new Promise(resolve => setTimeout(resolve,6000))
+        let plink=await this.makePlayable(track.url);
+        track={...track,source:plink};
         const index = this.tracks.findIndex(obj => obj.id === trg2);
         if (index !== -1) this.tracks[index] = track;
         // let link = document.createElement('link');
