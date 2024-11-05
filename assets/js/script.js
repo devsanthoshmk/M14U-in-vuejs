@@ -24,45 +24,54 @@
       showRes : false,
       searchtooltip : false,
         // onclick fetch instead for song name click
-      delTracks: [ {
-        name: "MODUS",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
-        url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
-        favorited: true
-      },
-      {
-        name: "Tick Tock",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
-        url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
-        favorited: false
-      },
-      {
-        name: "Daylight",
-        artist: "Joji, Diplo",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
-        url: "https://www.youtube.com/watch?v=v97FPN2US2o",
-        favorited: false
-      },
-      {
-        name: "Upgrade",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
-        url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
-        favorited: true
-      },
-      {
-        name: "Gimme Love",
-        artist: "Joji",
-        cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
-        source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
-        url: "https://www.youtube.com/watch?v=jPan651rVMs",
-        favorited: false}],
+      delTracks:[
+        {
+          id: 1,
+          name: "MODUS",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/MODUS.mp3",
+          url: "https://www.youtube.com/watch?v=2Uxq-kIAMBM",
+          favorited: true
+        },
+        {
+          id: 2,
+          name: "Tick Tock",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Tick Tock.mp3",
+          url: "https://www.youtube.com/watch?v=2FCo7OxVoeY",
+          favorited: false
+        },
+        {
+          id: 3,
+          name: "Daylight",
+          artist: "Joji, Diplo",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Daylight.mp3",
+          url: "https://www.youtube.com/watch?v=v97FPN2US2o",
+          favorited: false
+        },
+        {
+          id: 4,
+          name: "Upgrade",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Upgrade.mp3",
+          url: "https://www.youtube.com/watch?v=DoE_le4Te9U",
+          favorited: true
+        },
+        {
+          id: 5,
+          name: "Gimme Love",
+          artist: "Joji",
+          cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
+          source: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/mp3/Gimme Love.mp3",
+          url: "https://www.youtube.com/watch?v=jPan651rVMs",
+          favorited: false
+        }
+      ]
+      ,
 
         //for draggable
         drag:false,
@@ -183,11 +192,15 @@
 
     },
 
-    directAddTrack(track){
-      // in process --> //make this a onclick for li song name(<p>) click method before that add thhat song playable link to tracks and continuoue this
+    async directAddTrack(track){
+      // in process --> //make this a onclick for li song name(<p>) click method before that add that song playable link to tracks and continuoue this
+      this.tracks.push({});
+      const ind=this.tracks.length -1;
+      await new Promise(resolve => setTimeout(resolve,6000))
+      this.tracks[ind]=track;
       this.tracks=[track];
       let vm = this;
-      this.currentTrack = this.tracks[0];
+      this.currentTrack = track;
       this.audio = new Audio();
       this.audio.src = this.currentTrack.source;
       this.audio.ontimeupdate = function() {
@@ -217,15 +230,17 @@
         this.directAddTrack(track)
       }
       else{
-        this.tracks.push({});
-        const ind=this.tracks.length -1;
+        const targetId=this.tracks.pop().id + 1
+        this.tracks.push({id:targetId});
+        // const ind=this.tracks.length -1;
         await new Promise(resolve => setTimeout(resolve,6000))
-        this.tracks[ind]=track;
-        let link = document.createElement('link');
-        link.rel = "prefetch";
-        link.href = track.cover;
-        link.as = "image"
-        document.head.appendChild(link)
+        const index = this.tracks.findIndex(obj => obj.id === targetId);
+        if (index !== -1) this.tracks[index] = newObject;
+        // let link = document.createElement('link');
+        // link.rel = "prefetch";
+        // link.href = track.cover;
+        // link.as = "image"
+        // document.head.appendChild(link)
       }
     }
   },
@@ -233,6 +248,7 @@
       // for dev
     tracks(newValue) {
       console.log(newValue);  // Logs the updated value of `myArray`
+      console.log(this.currentTrackIndex,this.tracks[this.currentTrackIndex].id)
     }},
     // tracks[0](newValue,preValue){}
   computed: {
