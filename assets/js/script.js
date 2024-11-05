@@ -17,6 +17,8 @@
       currentTrackIndex: 0,
       transitionName: null,
 
+      //used to create dynamic unique id for tracks
+      gid:0,
       //offcanvas songs/songQueue
 
       songSearch : null,
@@ -26,7 +28,6 @@
         // onclick fetch instead for song name click
       delTracks:[
         {
-          id: 1,
           name: "MODUS",
           artist: "Joji",
           cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
@@ -35,7 +36,6 @@
           favorited: true
         },
         {
-          id: 2,
           name: "Tick Tock",
           artist: "Joji",
           cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
@@ -44,7 +44,6 @@
           favorited: false
         },
         {
-          id: 3,
           name: "Daylight",
           artist: "Joji, Diplo",
           cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/Daylight-joji.jpg",
@@ -53,7 +52,6 @@
           favorited: false
         },
         {
-          id: 4,
           name: "Upgrade",
           artist: "Joji",
           cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
@@ -62,7 +60,6 @@
           favorited: true
         },
         {
-          id: 5,
           name: "Gimme Love",
           artist: "Joji",
           cover: "https://raw.githubusercontent.com/akshzyx/playerzyx/master/img/nectar-joji.jpg",
@@ -193,12 +190,17 @@
     },
 
     async directAddTrack(track){
+
       // in process --> //make this a onclick for li song name(<p>) click method before that add that song playable link to tracks and continuoue this
-      this.tracks.push({});
+
+      const trg1=++this.gid;
+      track={...track,id:trg1}
+      if (trg1===1) this.tracks=[{id:track.id,name:"Loading..."}];
+      else this.tracks.splice(0,0,{id:track.id,name:"Loading..."})
       const ind=this.tracks.length -1;
       await new Promise(resolve => setTimeout(resolve,6000))
-      this.tracks[ind]=track;
-      this.tracks=[track];
+      const index = this.tracks.findIndex(obj => obj.id === trg1);
+      if (index !== -1) this.tracks[index] = track;
       let vm = this;
       this.currentTrack = track;
       this.audio = new Audio();
@@ -230,22 +232,29 @@
         this.directAddTrack(track)
       }
       else{
-        const targetId=this.tracks.pop().id + 1
-        this.tracks.push({id:targetId});
+        const trg2=++this.gid;
+        track={...track,id:trg2}
+        this.tracks.push({id:track.id,name:"Loading..."});
         // const ind=this.tracks.length -1;
         await new Promise(resolve => setTimeout(resolve,6000))
-        const index = this.tracks.findIndex(obj => obj.id === targetId);
-        if (index !== -1) this.tracks[index] = newObject;
+        const index = this.tracks.findIndex(obj => obj.id === trg2);
+        if (index !== -1) this.tracks[index] = track;
         // let link = document.createElement('link');
         // link.rel = "prefetch";
         // link.href = track.cover;
         // link.as = "image"
         // document.head.appendChild(link)
       }
+    },
+    removeAt(index) {
+      this.tracks.splice(index, 1);
     }
   },
   watch: {
       // for dev
+    // gid(newValue){
+    //   console.log(newValue);  // Logs the updated value of `myArray`
+    // },
     tracks(newValue) {
       console.log(newValue);  // Logs the updated value of `myArray`
       console.log(this.currentTrackIndex,this.tracks[this.currentTrackIndex].id)

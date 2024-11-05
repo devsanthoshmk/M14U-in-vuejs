@@ -71,9 +71,11 @@
                 style="padding-right: 0px;width: 205.906px;border-radius: -28px;">
                 <!-- add onlick and make that created() poperty as a method -->
                 <li v-for="temp in delTracks" class="list-group-item d-flex justify-content-between align-items-center"
-                  style="height: 38px;width: 295.906px;">
-                  <p @click="directAddTrack(temp)" class="d-flex d-xxl-flex justify-content-xxl-center">{{temp.name}}
-                  </p>
+                style="height: 42px; width: 295.906px; "><div  @click="directAddTrack(temp)" style="overflow-x: auto; white-space: nowrap; height: inherit;" class="d-flex justify-content-center align-items-center">
+                  <p class="text-center">{{temp.name}}
+                    </p>
+                </div>
+                
                   <button @click="queue(temp)" data-bs-placement="top" title="Add To Queue"
                     class="btn active border-0 border-white">
 
@@ -108,29 +110,41 @@
               </ul>
             </div>
           </div>
-          <div id="empty" style="height: 68px;"></div>
+          <div id="empty" style="height: 48px;"></div>
           <div>
             <div>
-              <h1 class="fs-3 mb-2">Queue</h1>
+              <div class="d-flex justify-content-between align-items-center">
+              <h1 class="fs-3 mb-2">Queue</h1>  <i v-show="tracks.length !== 0" class="fa fa-times close ps-2" @click="tracks.splice(1,tracks.length-1)" title="clear queue"></i>            </div>
               <div v-show="tracks.length === 0" style="margin-top: 90px;">
                 <p class="text-center">NO SONGS ADDED TO THE QUEUE :(<br>SEARCH AND ADD SONGS TO QUEUE</p>
               </div>
             </div>
             <div>
-              <draggable class="list-group" tag="transition-group" :component-data="{ 
-          tag: 'ul',
-          type: 'transition-group',
-          name: !drag ? 'flip-list' : null
-        }" v-model="tracks" v-bind="dragOptions" @start="drag = true" @end="drag = false" item-key="order">
-                <template #item="{ element }">
-                  <li class="list-group-item">
-                    <i :class="
-                element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'
-              " @click="element.fixed = !element.fixed" aria-hidden="true"></i>
-                    {{ element.name }}
-                  </li>
-                </template>
-              </draggable>
+              <draggable
+              tag="ul"
+              :list="tracks"
+              class="list-group vertiscrol w-100 w-md-75 w-lg-50 mx-auto" 
+              handle=".handle"
+              item-key="id"
+              style="padding-right: 0px; width: 205.906px;"
+            >
+              <template #item="{ element, index }">
+                <li 
+                  class="list-group-item d-flex justify-content-center align-items-center" 
+                  style="height: 42px; width: 295.906px; display: inherit;"
+                >
+                  <i class="fa fa-align-justify handle"></i>
+                  <div class="flex-grow-1 d-flex justify-content-between align-items-center" style="width: 10vh;height: inherit;">
+                    <div class="d-flex justify-content-start align-items-center" style="overflow-x: auto; white-space: nowrap; flex-grow: 1; max-width: 100%;">
+                      <span class="text">{{ element.name }}</span>
+                    </div>
+                    <i class="fa fa-times close ps-2" @click="removeAt(index)"></i>
+                  </div>
+                </li>
+              </template>
+            </draggable>
+            
+            
             </div>
           </div>
         </div>

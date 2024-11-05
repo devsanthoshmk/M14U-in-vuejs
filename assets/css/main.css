@@ -463,3 +463,18 @@ body {
   pointer-events: none;
   transform-origin: center center;
 }
+
+.handle {
+  cursor: grab;
+  margin-right: 10px;
+}
+.close {
+  cursor: pointer;
+  color: red;
+}
+
+.vertiscrol{
+  height:35vh; 
+  overflow-y: auto; 
+  white-space: nowrap;
+}
