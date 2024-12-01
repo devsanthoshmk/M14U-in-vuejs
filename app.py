@@ -27,5 +27,5 @@ def song_link():
     song_name=request.args.get('song_url')
     return jsonify(audio(song_name))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
