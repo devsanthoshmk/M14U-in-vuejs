@@ -20,8 +20,8 @@ def make_playable(url):
                 # if dic=={}:
                 #     dic[0]={"quality":int(i['format'][:3]),"url":i["url"]}
                     index+=1
-        json.dump(info_dict, open("del.json", "w"))
-        json.dump(dic, open("dic.json", "w"))
+        # json.dump(info_dict, open("del.json", "w"))
+        # json.dump(dic, open("dic.json", "w"))
         return  next(reversed(dic.values()))["url"]
 
 if __name__=="__main__":
