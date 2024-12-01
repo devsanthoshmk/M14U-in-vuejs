@@ -1,0 +1,10 @@
+
+Flask==3.0.2
+
+gunicorn==23.0.0
+
+httpx==0.27.0
+
+youtube-dl==2021.12.17
+yt-dlp==2024.5.27
+
