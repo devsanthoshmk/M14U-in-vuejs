@@ -1,0 +1,29 @@
+{
+  "name": "m14u-in-vuejs",
+  "version": "1.0.0",
+  "description": "a goto listen along music player M14U now as a project tadaaaw!!!!",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsanthoshmk/M14U-in-vuejs.git"
+  },
+  "author": "Santhosh M K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devsanthoshmk/M14U-in-vuejs/issues"
+  },
+  "homepage": "https://github.com/devsanthoshmk/M14U-in-vuejs#readme",
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.2.1"
+  }
+}
