@@ -460,7 +460,7 @@ components: {
 
       // }
       this.loading=true;
-      const response = await fetch(`/song_results?input=${encodeURIComponent(query)}`); 
+      const response = await fetch(`http://127.0.0.1:1234/song_results?input=${encodeURIComponent(query)}`); 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -474,7 +474,7 @@ components: {
 
     },
     async makePlayable(link){
-      const response = await fetch(`/playable_link?song_url=${encodeURIComponent(link)}`); 
+      const response = await fetch(`http://127.0.0.1:1234/playable_link?song_url=${encodeURIComponent(link)}`); 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
