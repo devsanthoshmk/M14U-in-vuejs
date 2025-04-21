@@ -4,7 +4,6 @@ from flask_cors import CORS
 import YoutubeMusicAPI as yt
 from ytdlp import make_playable as audio
 
-import requests
 
 app=Flask(__name__)
 CORS(app)
