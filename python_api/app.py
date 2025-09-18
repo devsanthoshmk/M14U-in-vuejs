@@ -21,6 +21,9 @@ def get_song_results():
 def song_link():
     song_name=request.args.get('song_url')
     return jsonify(audio(song_name))
+@app.route('/sayhi',methods=['GET'])
+def sayhi():
+    return "hi"
 
 if __name__ == '__main__':
     app.run(debug=True,port=1234)
